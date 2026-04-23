@@ -1,0 +1,366 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-display: var(--font-raleway);
+  --font-body: var(--font-dm-sans);
+}
+
+/* ══════════════════════════════════════════
+   NEO COLOR SYSTEM
+══════════════════════════════════════════ */
+:root {
+  --c-bg:      #050810;
+  --c-surface: #080c14;
+  --c-card:    #0b1121;
+  --c-cyan:    #00f5ff;
+  --c-purple:  #bd00ff;
+  --c-pink:    #ff0090;
+  --c-green:   #00ff88;
+  --c-border:  rgba(0, 245, 255, 0.12);
+  --c-text:    #cbd5e1;
+  --c-muted:   #475569;
+}
+
+/* ══════════════════════════════════════════
+   BASE
+══════════════════════════════════════════ */
+html {
+  background: var(--c-bg);
+}
+
+body {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  min-height: 100vh;
+}
+
+/* ══════════════════════════════════════════
+   CURSOR — hide default on pointer devices
+══════════════════════════════════════════ */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
+/* ══════════════════════════════════════════
+   SCROLLBARS
+══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.2);
+  border-radius: 2px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 245, 255, 0.2) transparent;
+}
+
+.sidebar-scroll { scrollbar-width: none; }
+.sidebar-scroll::-webkit-scrollbar { display: none; }
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.shield-clip {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 65%, 50% 100%, 0% 65%);
+}
+
+/* ══════════════════════════════════════════
+   TYPOGRAPHY
+══════════════════════════════════════════ */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-raleway);
+  font-weight: 700;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--c-cyan);
+}
+.section-heading::before {
+  content: "";
+  display: block;
+  flex-shrink: 0;
+  width: 2px;
+  height: 14px;
+  background: linear-gradient(to bottom, var(--c-cyan), var(--c-purple));
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.7), 0 0 20px rgba(0, 245, 255, 0.3);
+}
+
+.neo-name-gradient {
+  background: linear-gradient(
+    120deg,
+    var(--c-cyan) 0%,
+    #a78bfa 35%,
+    var(--c-pink) 70%,
+    var(--c-cyan) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: neo-shimmer 4s linear infinite;
+}
+
+/* ══════════════════════════════════════════
+   COMPONENTS
+══════════════════════════════════════════ */
+
+/* Neo card */
+.neo-card {
+  position: relative;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.neo-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 245, 255, 0.025) 0%,
+    transparent 50%,
+    rgba(189, 0, 255, 0.015) 100%
+  );
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+.neo-card > * { position: relative; z-index: 1; }
+
+/* Exp card */
+.exp-card {
+  border-left: 2px solid var(--c-cyan) !important;
+  box-shadow: -3px 0 20px rgba(0, 245, 255, 0.1);
+}
+
+/* Skill tag */
+.neo-skill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  background: rgba(0, 245, 255, 0.04);
+  color: rgba(0, 245, 255, 0.75);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+.neo-skill:hover {
+  background: rgba(0, 245, 255, 0.1);
+  border-color: rgba(0, 245, 255, 0.5);
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.22);
+  color: var(--c-cyan);
+}
+
+/* Available badge */
+.neo-available {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(0, 255, 136, 0.06);
+  border: 1px solid rgba(0, 255, 136, 0.28);
+  color: #00ff88;
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+}
+.neo-available-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff88;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.9);
+  animation: neo-pulse-green 2s ease-in-out infinite;
+}
+
+/* Divider */
+.neo-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 245, 255, 0.1),
+    rgba(189, 0, 255, 0.1),
+    transparent
+  );
+  border: none;
+  margin: 0;
+}
+
+/* Role accent line */
+.neo-role-line {
+  display: inline-block;
+  width: 36px;
+  height: 1px;
+  background: linear-gradient(to right, var(--c-cyan), var(--c-purple));
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.5);
+  flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════ */
+.neo-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(0,245,255,0.12), rgba(189,0,255,0.12));
+  border: 1px solid var(--c-cyan);
+  color: var(--c-cyan);
+  box-shadow: 0 0 20px rgba(0,245,255,0.15), inset 0 1px 0 rgba(0,245,255,0.2);
+  transition: box-shadow 0.2s ease, background 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.neo-btn-primary:hover {
+  box-shadow: 0 0 35px rgba(0,245,255,0.3), 0 0 70px rgba(0,245,255,0.1), inset 0 1px 0 rgba(0,245,255,0.3);
+  background: linear-gradient(135deg, rgba(0,245,255,0.18), rgba(189,0,255,0.2));
+}
+
+.neo-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid rgba(189, 0, 255, 0.4);
+  color: rgba(189, 0, 255, 0.9);
+  box-shadow: 0 0 15px rgba(189,0,255,0.08);
+  transition: box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+.neo-btn-secondary:hover {
+  background: rgba(189, 0, 255, 0.09);
+  border-color: var(--c-purple);
+  box-shadow: 0 0 30px rgba(189,0,255,0.28);
+}
+
+.neo-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid rgba(255, 0, 144, 0.3);
+  color: rgba(255, 0, 144, 0.8);
+  box-shadow: 0 0 12px rgba(255,0,144,0.06);
+  transition: box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+.neo-btn-ghost:hover {
+  background: rgba(255, 0, 144, 0.07);
+  border-color: var(--c-pink);
+  box-shadow: 0 0 28px rgba(255,0,144,0.22);
+}
+
+/* Tech tag */
+.neo-tech-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background: rgba(189, 0, 255, 0.07);
+  border: 1px solid rgba(189, 0, 255, 0.22);
+  color: rgba(189, 0, 255, 0.85);
+}
+
+/* Card shine overlay (for TiltCard) */
+.card-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  transition: none !important;
+}
+
+/* ══════════════════════════════════════════
+   GLOBAL TRANSITIONS (color only, not transform)
+══════════════════════════════════════════ */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, opacity, box-shadow;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+/* ══════════════════════════════════════════
+   KEYFRAMES
+══════════════════════════════════════════ */
+@keyframes neo-shimmer {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes neo-pulse-green {
+  0%, 100% { box-shadow: 0 0 8px rgba(0,255,136,0.9); }
+  50%       { box-shadow: 0 0 3px rgba(0,255,136,0.3); }
+}
+
+@keyframes neo-pulse-ring {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+@keyframes neo-orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes neo-orbit-r {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes neo-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes neo-fade-up {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════
+   ANIMATION HELPER CLASSES
+══════════════════════════════════════════ */
+.neo-fade-1 { animation: neo-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s both; }
+.neo-fade-2 { animation: neo-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.15s both; }
+.neo-fade-3 { animation: neo-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.25s both; }
+.neo-fade-4 { animation: neo-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.35s both; }
+.neo-fade-5 { animation: neo-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.45s both; }
+.neo-fade-6 { animation: neo-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) 0.55s both; }
+
+.neo-photo-float  { animation: neo-float 5s ease-in-out infinite; }
+.neo-ring-pulse-1 { animation: neo-pulse-ring 3s ease-in-out infinite; }
+.neo-ring-pulse-2 { animation: neo-pulse-ring 3s ease-in-out infinite 1.2s; }
+.neo-ring-orbit   { animation: neo-orbit 10s linear infinite; }
+.neo-ring-orbit-r { animation: neo-orbit-r 16s linear infinite; }
